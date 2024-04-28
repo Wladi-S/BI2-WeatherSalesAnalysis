@@ -78,6 +78,9 @@ target/
 # exclude data from source control by default
 data/raw/Umsatzdaten
 data/raw/Wetterdaten
+data/external
+data/interim
+data/processed
 
 # Mac OS-specific storage files
 .DS_Store
