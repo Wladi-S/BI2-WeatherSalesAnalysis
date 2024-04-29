@@ -94,4 +94,5 @@ gesamt_df["Enddatum"] = pd.to_datetime(
 gesamt_df = gesamt_df.drop(gesamt_df.columns[[0, 1]], axis=1)
 
 # Speichern des DataFrames
-gesamt_df.to_parquet("../../data/interim/Ferien.parquet", index=False)
+# gesamt_df.to_parquet("data/interim/ferien.parquet", index=False)
+# gesamt_df.to_csv("data/interim/ferien.csv", index=False, encoding="utf-8")
