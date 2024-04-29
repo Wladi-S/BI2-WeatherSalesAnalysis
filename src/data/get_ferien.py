@@ -92,7 +92,8 @@ gesamt_df["Enddatum"] = pd.to_datetime(
 
 # Entfernen der ursprünglichen Datums- und Jahres-Spalten
 gesamt_df = gesamt_df.drop(gesamt_df.columns[[0, 1]], axis=1)
+gesamt_df = gesamt_df.dropna(subset=["Startdatum", "Enddatum"], how="all")
 
 # Speichern des DataFrames
-# gesamt_df.to_parquet("data/interim/ferien.parquet", index=False)
-# gesamt_df.to_csv("data/interim/ferien.csv", index=False, encoding="utf-8")
+gesamt_df.to_parquet("data/interim/ferien.parquet", index=False)
+gesamt_df.to_csv("data/interim/ferien.csv", index=False, encoding="utf-8")
