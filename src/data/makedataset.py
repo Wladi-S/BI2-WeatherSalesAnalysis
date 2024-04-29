@@ -56,7 +56,7 @@ def read_and_process_files(directory):
 
     if dfs:
         gesamt_df = pd.concat(dfs, ignore_index=True)
-        return gesamt_df
+        return gesamt_df.replace(" ", "", regex=True)
     else:
         return pd.DataFrame()
 
@@ -96,8 +96,6 @@ def create_weather_dataset(data_directory):
             df[col] = pd.to_numeric(df[col], errors="coerce")
         df.replace(-999, np.nan, inplace=True)
         df.set_index(["STATIONS_ID", "MESS_DATUM"], inplace=True)
-
-        # Weiterverarbeitung wie im Originalskript
         grouped_df = df.groupby("STATIONS_ID")
         new_df = pd.DataFrame()
         start_date = pd.Timestamp("1994-01-01")
@@ -165,12 +163,16 @@ if __name__ == "__main__":
 
     # Wetterdatensatz erstellen
     weather_data = create_weather_dataset("data/raw/Wetterdaten")
-    # weather_data.to_csv(os.path.join(output_directory, "weather_dataset.csv"), index=False)
-    # weather_data.to_parquet(os.path.join(output_directory, "weather_dataset.parquet"))
+    weather_data.to_csv(
+        os.path.join(output_directory, "weather_dataset.csv"), index=False
+    )
+    weather_data.to_parquet(os.path.join(output_directory, "weather_dataset.parquet"))
 
     # Umsatzdatensatz erstellen
     revenue_data = create_revenue_dataset(
         "data/raw/Umsatzdaten/Gastronomieumsätze_flat.csv"
     )
-    # revenue_data.to_csv(os.path.join(output_directory, "revenue_dataset.csv"), index=False)
-    # revenue_data.to_parquet(os.path.join(output_directory, "revenue_dataset.parquet"))
+    revenue_data.to_csv(
+        os.path.join(output_directory, "revenue_dataset.csv"), index=False
+    )
+    revenue_data.to_parquet(os.path.join(output_directory, "revenue_dataset.parquet"))
