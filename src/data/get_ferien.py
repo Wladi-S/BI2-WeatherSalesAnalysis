@@ -35,12 +35,13 @@ for ferienart in ferienarten:
             response = requests.get(url)
             tables = pd.read_html(response.content)
             # Nehmen Sie an, dass die erste Tabelle die gewünschten Daten enthält
-            df = tables[0]
-            df["Bundesland"] = land  # Fügen Sie eine Spalte für das Bundesland hinzu
-            df["Ferienart"] = (
-                ferienart.capitalize()
-            )  # Fügen Sie eine Spalte für die Ferienart hinzu
-            df_liste.append(df)
+            for table in tables:
+                df = table
+                df["Bundesland"] = land  # Fügen Sie eine Spalte für das Bundesland hinzu
+                df["Ferienart"] = (
+                    ferienart.capitalize()
+                )  # Fügen Sie eine Spalte für die Ferienart hinzu
+                df_liste.append(df)
         except Exception as e:
             print(
                 f"Fehler beim Abrufen der Daten für {land} {ferienart.capitalize()}ferien: {e}"
